@@ -1,0 +1,23 @@
+{
+  "name": "tdd",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Alexander Ponezha <aponezha@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start:1": "node 1-reusable.js",
+    "start:2": "node 2-data-types.js",
+    "1": "node_modules/.bin/supervisor -q -n exit 1-reusable.js",
+    "2": "node_modules/.bin/supervisor -q -n exit 2-data-types.js",
+    "dec": "node_modules/.bin/supervisor -q -n exit decompose.js",
+    "test": "node_modules/.bin/mocha *spec.js",
+    "tdd": "node_modules/.bin/supervisor -q -n exit -x yarn test"
+  },
+  "devDependencies": {
+    "mocha": "^6.2.0",
+    "supervisor": "^0.12.0"
+  },
+  "dependencies": {
+    "chai": "^4.2.0"
+  }
+}
