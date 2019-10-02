@@ -3,8 +3,13 @@
 // Hoisting
 
 function hoist() {
+  /* eslint-disable no-use-before-define */
   console.log(x);
+  /* eslint-enable no-use-before-define */
+
+  /* eslint-disable no-var */
   var x = 1;
+  /* eslint-enable no-var */
 }
 hoist();
 
@@ -26,22 +31,27 @@ console.dir(obj);
 
 // Types
 
-var arr = [true, 'hello', 5, 12, -200, false, false, 'word', { name: 'Marcus' }, new Date(), Date.now(), undefined, null];
+const arr = [true, 'hello', 5, 12, -200, false, false, 'word',
+  { name: 'Marcus' }, new Date(), Date.now(),
+  undefined, null, NaN];
 console.log(arr);
 
-var hash = { number: 0, string: 0, boolean: 0, object: 0, undefined: 0 };
+
+const hash = { number: 0, string: 0, boolean: 0, object: 0, undefined: 0 };
 
 for (const item of arr) {
-  const type = typeof (item);
+  const type = typeof(item);
   hash[type]++;
 }
 console.log(hash);
 
-var hash2 = {};
+const hash2 = {};
 for (const item of arr) {
-  const key = typeof (item);
+  const key = typeof(item);
+  /* eslint-disable no-prototype-builtins */
   hash2[key] = hash2.hasOwnProperty(key) ?
     hash2[key] + 1 :
     1;
+  /* eslint-enable no-prototype-builtins */
 }
 console.log(hash2);

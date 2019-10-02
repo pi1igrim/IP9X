@@ -2,7 +2,7 @@
 
 // Идентификаторы
 
-var name = 'Alexander';
+const name = 'Alexander';
 
 const YEAR_OF_BIRTH = 1973;
 
@@ -46,7 +46,7 @@ for (let i = 0; i < 10; i++) {
 // Объекты
 
 const obj = { name: '' };
-var v = { name: '' };
+let v = { name: '' };
 
 obj.name = 'const';
 v.name = 'var';
@@ -68,7 +68,7 @@ const phoneBook = [
 ];
 
 function findPhoneByName(name) {
-  let result = phoneBook.find(item => item.name === name);
+  const result = phoneBook.find(item => item.name === name);
   return result ? result.phone : undefined;
 }
 console.log(findPhoneByName('Marcus Aurelius'));

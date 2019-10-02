@@ -27,7 +27,6 @@ const section = (
   // Returns: ['All you need ', ' JavaScript']
 ) => {
   const i = s.indexOf(separator);
-  // Hi
   if (i < 0) return [s, ''];
   return [s.slice(0, i), s.slice(i + separator.length)];
 };
@@ -83,11 +82,7 @@ const parseLines = (
   }
 };
 
-const parseSignature = (
-  // Parse function signature
-  fn // function, method
-  // Returns: { title, description, parameters, comments }
-) => {
+const parseSignature = fn => {
   const signature = {
     title: '',
     description: '',
@@ -107,11 +102,7 @@ const parseSignature = (
   return signature;
 };
 
-const introspect = (
-  // Introspect interface
-  namespace // hash of interfaces
-  // Returns: hash of hash of record, { method, title, parameters }
-) => {
+const introspect = namespace => {
   const inventory = {};
   for (const name in namespace) {
     const iface = namespace[name];
@@ -128,11 +119,7 @@ const introspect = (
   return inventory;
 };
 
-const badIntrospect = (
-  // Introspect interface
-  namespace // hash of interfaces
-  // Returns: hash of hash of record, { method, title, parameters }
-) => {
+const badIntrospect = namespace => {
   const inventory = {};
   for (const name in namespace) {
     const iface = namespace[name];
@@ -197,5 +184,7 @@ console.log('='.repeat(80));
 
 console.dir('badIntrospect');
 console.dir(badIntrospect(iface), { depth: 5 });
+console.dir('introspect');
+console.dir(introspect(iface), { depth: 5 });
 console.dir('ispect');
 console.dir(ispect(iface), { depth: 5 });

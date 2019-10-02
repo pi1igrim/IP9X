@@ -13,8 +13,8 @@ const section = (
 };
 
 const selectSpecification = text => {
-  const textBetweenRoundedBrackets = /(?<=^\(\s*).*?(?=\s*\)\s*(=>)*\s*\{)/gs;
-  return text.match(textBetweenRoundedBrackets).join();
+  const re = /(?<=^\(\s*).*?(?=\s*\)\s*(=>)*\s*\{)/gs;
+  return text.match(re).join();
 };
 module.exports.selectSpecification = selectSpecification;
 
@@ -22,15 +22,12 @@ const trim = text => text.trim();
 
 const isComment = line => line.trimLeft().startsWith('//');
 const isNotComment = line => !isComment(line);
-const unComment = line => {
-  const length = '//'.length;
-  return isComment(line) ?
-    line.trimLeft().substring(length) :
-    line;
-};
+const unComment = line => (isComment(line) ?
+  line.trimLeft().substring('//'.length) :
+  line);
 
-const isEmpty = text => text ? false : true;
-const isNotEmpty = text => text ? true : false;
+const isEmpty = value => !value;
+const isNotEmpty = value => !!value;
 
 const isNotStartsWithNamed = line => {
   const NAMED_LINES = ['Example:', 'Returns:', 'Hint:', 'Result:'];
@@ -40,7 +37,7 @@ const isNotStartsWithNamed = line => {
 
 const parseParameterDescription = line => {
   const [name, text] = section(line, '//');
-  let [type, comment] = section(text, ',');
+  const [type, comment] = section(text, ',');
   return {
     name: name.replace(',', '').trim(),
     type: unComment(type).trim(),
@@ -97,11 +94,7 @@ const parseSignature = fn => {
 };
 module.exports.parseSignature = parseSignature;
 
-const ispect = (
-  // Introspect interface
-  namespace // hash of interfaces
-  // Returns: hash of hash of record, { method, title, parameters }
-) => {
+const ispect = namespace => {
   const inventory = {};
   for (const name in namespace) {
     const iface = namespace[name];

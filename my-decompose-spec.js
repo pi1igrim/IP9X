@@ -1,8 +1,9 @@
-'use strict'
+/* eslint-disable */
+'use strict';
 const { expect } = require('chai');
 
-describe('my-decompose.selectSpecification', function () {
-  it('select from merge spec', function () {
+describe('my-decompose.selectSpecification', () => {
+  it('select from merge spec', () => {
     // Assign
     const source = `(
   // Distinct merge miltiple arrays
@@ -25,12 +26,12 @@ describe('my-decompose.selectSpecification', function () {
   // Returns: array`;
     const { selectSpecification } = require('./my-decompose');
     // Act
-    let result = selectSpecification(source);
+    const result = selectSpecification(source);
     // Assert
     expect(result).to.be.equal(expected);
   });
 
-  it('select from section spec', function () {
+  it('select from section spec', () => {
     // Assign
     const source = `(
   // Splits string by the first occurrence of separator
@@ -40,7 +41,6 @@ describe('my-decompose.selectSpecification', function () {
   // Returns: ['All you need ', ' JavaScript']
 ) => {
   const i = s.indexOf(separator);
-  // Hi
   if (i < 0) return [s, ''];
   return [s.slice(0, i), s.slice(i + separator.length)];
 }`;
@@ -52,14 +52,14 @@ describe('my-decompose.selectSpecification', function () {
   // Returns: ['All you need ', ' JavaScript']`;
     const { selectSpecification } = require('./my-decompose');
     // Act
-    let result = selectSpecification(source);
+    const result = selectSpecification(source);
     // Assert
     expect(result).to.be.equal(expected);
   });
 });
 
-describe('my-decompose.parseSignature', function () {
-  it('get spec from merge spec', function () {
+describe('my-decompose.parseSignature', () => {
+  it('get spec from merge spec', () => {
     // Assign
     const source = `(
   // Distinct merge miltiple arrays
@@ -76,16 +76,26 @@ describe('my-decompose.parseSignature', function () {
   }
   return array;
 }`;
-    const expected = `{"title":"Distinct merge miltiple arrays","description":"","parameters":[{"name":"...args","type":"array of array","comment":""}],"comments":[{"name":"Returns","comment":"array"}]}`;
+    const expected = JSON.stringify({
+      'title': 'Distinct merge miltiple arrays',
+      'description': '',
+      'parameters': [
+        {
+          'name': '...args', 'type': 'array of array',
+          'comment': ''
+        }
+      ],
+      'comments': [{ 'name': 'Returns', 'comment': 'array' }]
+    });
     const { parseSignature } = require('./my-decompose');
     // Act
     const signature = parseSignature(source);
-    let result = JSON.stringify(signature);
     // Assert
+    const result = JSON.stringify(signature);
     expect(result).to.be.equal(expected);
   });
 
-  it('get spec from section spec', function () {
+  it('get spec from section spec', () => {
     // Assign
     const source = `(
   // Splits string by the first occurrence of separator
@@ -95,16 +105,26 @@ describe('my-decompose.parseSignature', function () {
   // Returns: ['All you need ', ' JavaScript']
 ) => {
   const i = s.indexOf(separator);
-  // Hi
   if (i < 0) return [s, ''];
   return [s.slice(0, i), s.slice(i + separator.length)];
 }`;
-    const expected = `{"title":"Splits string by the first occurrence of separator","description":"","parameters":[{"name":"s","type":"string","comment":""},{"name":"separator","type":"string","comment":"or char"}],"comments":[{"name":"Example","comment":"section('All you need is JavaScript', 'is')"},{"name":"Returns","comment":"['All you need ', ' JavaScript']"}]}`;
+    const expected = JSON.stringify({
+      'title': 'Splits string by the first occurrence of separator',
+      'description': '',
+      'parameters': [
+        { 'name': 's', 'type': 'string', 'comment': '' },
+        { 'name': 'separator', 'type': 'string', 'comment': 'or char' }
+      ],
+      'comments': [
+        { 'name': 'Example', 'comment': 'section(\'All you need is JavaScript\', \'is\')' },
+        { 'name': 'Returns', 'comment': '[\'All you need \', \' JavaScript\']' }
+      ]
+    });
     const { parseSignature } = require('./my-decompose');
     // Act
     const signature = parseSignature(source);
-    let result = JSON.stringify(signature);
     // Assert
+    const result = JSON.stringify(signature);
     expect(result).to.be.equal(expected);
   });
 });

@@ -5,15 +5,18 @@
   "author": "Alexander Ponezha <aponezha@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start:1": "node 1-reusable.js",
-    "start:2": "node 2-data-types.js",
     "1": "node_modules/.bin/supervisor -q -n exit 1-reusable.js",
     "2": "node_modules/.bin/supervisor -q -n exit 2-data-types.js",
+    "start:1": "node 1-reusable.js",
+    "start:2": "node 2-data-types.js",
     "dec": "node_modules/.bin/supervisor -q -n exit decompose.js",
     "test": "node_modules/.bin/mocha *spec.js",
-    "tdd": "node_modules/.bin/supervisor -q -n exit -x yarn test"
+    "tdd": "node_modules/.bin/supervisor -q -n exit -x yarn test",
+    "lint": "node_modules/.bin/eslint *.js",
+    "syntax": "node_modules/.bin/supervisor -q -n exit -x yarn lint"
   },
   "devDependencies": {
+    "eslint": "^6.5.1",
     "mocha": "^6.2.0",
     "supervisor": "^0.12.0"
   },
